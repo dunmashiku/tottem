@@ -2,6 +2,13 @@ import gql from 'graphql-tag'
 import * as ApolloReactCommon from '@apollo/react-common'
 import * as ApolloReactHooks from '@apollo/react-hooks'
 export type Maybe<T> = T | undefined
+export type Exact<T extends { [key: string]: unknown }> = {
+    [K in keyof T]: T[K]
+}
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+    { [SubKey in K]?: Maybe<T[SubKey]> }
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+    { [SubKey in K]: Maybe<T[SubKey]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: string
@@ -26,83 +33,83 @@ export type Breadcrumb = {
 
 export type Collection = {
     __typename?: 'Collection'
-    id: Scalars['String']
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
     createdAt: Scalars['DateTime']
-    updatedAt: Scalars['DateTime']
-    isDeleted: Scalars['Boolean']
     detail?: Maybe<Scalars['String']>
+    id: Scalars['String']
+    isDeleted: Scalars['Boolean']
     items: Array<Item>
+    name?: Maybe<Scalars['String']>
     owner: User
     section: Section
+    slug: Scalars['String']
+    updatedAt: Scalars['DateTime']
 }
 
 export type CollectionItemsArgs = {
-    where?: Maybe<CollectionItemsWhereInput>
-    orderBy?: Maybe<CollectionItemsOrderByInput>
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<ItemWhereUniqueInput>
+    before?: Maybe<ItemWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    orderBy?: Maybe<CollectionItemsOrderByInput>
+    skip?: Maybe<Scalars['Int']>
+    where?: Maybe<CollectionItemsWhereInput>
 }
 
 export type CollectionCreateManyWithoutOwnerInput = {
-    create?: Maybe<Array<CollectionCreateWithoutOwnerInput>>
     connect?: Maybe<Array<CollectionWhereUniqueInput>>
+    create?: Maybe<Array<CollectionCreateWithoutOwnerInput>>
 }
 
 export type CollectionCreateManyWithoutSectionInput = {
-    create?: Maybe<Array<CollectionCreateWithoutSectionInput>>
     connect?: Maybe<Array<CollectionWhereUniqueInput>>
+    create?: Maybe<Array<CollectionCreateWithoutSectionInput>>
 }
 
 export type CollectionCreateOneWithoutItemsInput = {
-    create?: Maybe<CollectionCreateWithoutItemsInput>
     connect?: Maybe<CollectionWhereUniqueInput>
+    create?: Maybe<CollectionCreateWithoutItemsInput>
 }
 
 export type CollectionCreateWithoutItemsInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
-    section: SectionCreateOneWithoutCollectionsInput
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
     owner: UserCreateOneWithoutCollectionsInput
+    section: SectionCreateOneWithoutCollectionsInput
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionCreateWithoutOwnerInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     items?: Maybe<ItemCreateManyWithoutCollectionInput>
+    name?: Maybe<Scalars['String']>
     section: SectionCreateOneWithoutCollectionsInput
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionCreateWithoutSectionInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     items?: Maybe<ItemCreateManyWithoutCollectionInput>
+    name?: Maybe<Scalars['String']>
     owner: UserCreateOneWithoutCollectionsInput
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionFilter = {
     every?: Maybe<CollectionWhereInput>
-    some?: Maybe<CollectionWhereInput>
     none?: Maybe<CollectionWhereInput>
+    some?: Maybe<CollectionWhereInput>
 }
 
 export type CollectionItemsOrderByInput = {
@@ -115,157 +122,161 @@ export type CollectionItemsWhereInput = {
 }
 
 export type CollectionScalarWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    slug?: Maybe<StringFilter>
-    name?: Maybe<NullableStringFilter>
-    isDeleted?: Maybe<BooleanFilter>
-    detail?: Maybe<NullableStringFilter>
-    items?: Maybe<ItemFilter>
     AND?: Maybe<Array<CollectionScalarWhereInput>>
-    OR?: Maybe<Array<CollectionScalarWhereInput>>
+    createdAt?: Maybe<DateTimeFilter>
+    detail?: Maybe<NullableStringFilter>
+    id?: Maybe<StringFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    items?: Maybe<ItemFilter>
+    name?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<CollectionScalarWhereInput>>
+    OR?: Maybe<Array<CollectionScalarWhereInput>>
+    ownerId?: Maybe<StringFilter>
+    sectionId?: Maybe<StringFilter>
+    slug?: Maybe<StringFilter>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export type CollectionUpdateInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     items?: Maybe<ItemUpdateManyWithoutCollectionInput>
-    section?: Maybe<SectionUpdateOneRequiredWithoutCollectionsInput>
+    name?: Maybe<Scalars['String']>
     owner?: Maybe<UserUpdateOneRequiredWithoutCollectionsInput>
+    section?: Maybe<SectionUpdateOneRequiredWithoutCollectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionUpdateManyDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionUpdateManyWithoutOwnerInput = {
-    create?: Maybe<Array<CollectionCreateWithoutOwnerInput>>
     connect?: Maybe<Array<CollectionWhereUniqueInput>>
-    set?: Maybe<Array<CollectionWhereUniqueInput>>
-    disconnect?: Maybe<Array<CollectionWhereUniqueInput>>
+    create?: Maybe<Array<CollectionCreateWithoutOwnerInput>>
     delete?: Maybe<Array<CollectionWhereUniqueInput>>
+    deleteMany?: Maybe<Array<CollectionScalarWhereInput>>
+    disconnect?: Maybe<Array<CollectionWhereUniqueInput>>
+    set?: Maybe<Array<CollectionWhereUniqueInput>>
     update?: Maybe<Array<CollectionUpdateWithWhereUniqueWithoutOwnerInput>>
     updateMany?: Maybe<Array<CollectionUpdateManyWithWhereNestedInput>>
-    deleteMany?: Maybe<Array<CollectionScalarWhereInput>>
     upsert?: Maybe<Array<CollectionUpsertWithWhereUniqueWithoutOwnerInput>>
 }
 
 export type CollectionUpdateManyWithoutSectionInput = {
-    create?: Maybe<Array<CollectionCreateWithoutSectionInput>>
     connect?: Maybe<Array<CollectionWhereUniqueInput>>
-    set?: Maybe<Array<CollectionWhereUniqueInput>>
-    disconnect?: Maybe<Array<CollectionWhereUniqueInput>>
+    create?: Maybe<Array<CollectionCreateWithoutSectionInput>>
     delete?: Maybe<Array<CollectionWhereUniqueInput>>
+    deleteMany?: Maybe<Array<CollectionScalarWhereInput>>
+    disconnect?: Maybe<Array<CollectionWhereUniqueInput>>
+    set?: Maybe<Array<CollectionWhereUniqueInput>>
     update?: Maybe<Array<CollectionUpdateWithWhereUniqueWithoutSectionInput>>
     updateMany?: Maybe<Array<CollectionUpdateManyWithWhereNestedInput>>
-    deleteMany?: Maybe<Array<CollectionScalarWhereInput>>
     upsert?: Maybe<Array<CollectionUpsertWithWhereUniqueWithoutSectionInput>>
 }
 
 export type CollectionUpdateManyWithWhereNestedInput = {
-    where: CollectionScalarWhereInput
     data: CollectionUpdateManyDataInput
+    where: CollectionScalarWhereInput
 }
 
 export type CollectionUpdateOneWithoutItemsInput = {
-    create?: Maybe<CollectionCreateWithoutItemsInput>
     connect?: Maybe<CollectionWhereUniqueInput>
-    disconnect?: Maybe<Scalars['Boolean']>
+    create?: Maybe<CollectionCreateWithoutItemsInput>
     delete?: Maybe<Scalars['Boolean']>
+    disconnect?: Maybe<Scalars['Boolean']>
     update?: Maybe<CollectionUpdateWithoutItemsDataInput>
     upsert?: Maybe<CollectionUpsertWithoutItemsInput>
 }
 
 export type CollectionUpdateWithoutItemsDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
-    section?: Maybe<SectionUpdateOneRequiredWithoutCollectionsInput>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
     owner?: Maybe<UserUpdateOneRequiredWithoutCollectionsInput>
+    section?: Maybe<SectionUpdateOneRequiredWithoutCollectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionUpdateWithoutOwnerDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     items?: Maybe<ItemUpdateManyWithoutCollectionInput>
+    name?: Maybe<Scalars['String']>
     section?: Maybe<SectionUpdateOneRequiredWithoutCollectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionUpdateWithoutSectionDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     detail?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     items?: Maybe<ItemUpdateManyWithoutCollectionInput>
+    name?: Maybe<Scalars['String']>
     owner?: Maybe<UserUpdateOneRequiredWithoutCollectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CollectionUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: CollectionWhereUniqueInput
     data: CollectionUpdateWithoutOwnerDataInput
+    where: CollectionWhereUniqueInput
 }
 
 export type CollectionUpdateWithWhereUniqueWithoutSectionInput = {
-    where: CollectionWhereUniqueInput
     data: CollectionUpdateWithoutSectionDataInput
+    where: CollectionWhereUniqueInput
 }
 
 export type CollectionUpsertWithoutItemsInput = {
-    update: CollectionUpdateWithoutItemsDataInput
     create: CollectionCreateWithoutItemsInput
+    update: CollectionUpdateWithoutItemsDataInput
 }
 
 export type CollectionUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: CollectionWhereUniqueInput
-    update: CollectionUpdateWithoutOwnerDataInput
     create: CollectionCreateWithoutOwnerInput
+    update: CollectionUpdateWithoutOwnerDataInput
+    where: CollectionWhereUniqueInput
 }
 
 export type CollectionUpsertWithWhereUniqueWithoutSectionInput = {
-    where: CollectionWhereUniqueInput
-    update: CollectionUpdateWithoutSectionDataInput
     create: CollectionCreateWithoutSectionInput
+    update: CollectionUpdateWithoutSectionDataInput
+    where: CollectionWhereUniqueInput
 }
 
 export type CollectionWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    slug?: Maybe<StringFilter>
-    name?: Maybe<NullableStringFilter>
-    isDeleted?: Maybe<BooleanFilter>
-    detail?: Maybe<NullableStringFilter>
-    items?: Maybe<ItemFilter>
     AND?: Maybe<Array<CollectionWhereInput>>
-    OR?: Maybe<Array<CollectionWhereInput>>
+    createdAt?: Maybe<DateTimeFilter>
+    detail?: Maybe<NullableStringFilter>
+    id?: Maybe<StringFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    items?: Maybe<ItemFilter>
+    name?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<CollectionWhereInput>>
-    section?: Maybe<SectionWhereInput>
+    OR?: Maybe<Array<CollectionWhereInput>>
     owner?: Maybe<UserWhereInput>
+    ownerId?: Maybe<StringFilter>
+    section?: Maybe<SectionWhereInput>
+    sectionId?: Maybe<StringFilter>
+    slug?: Maybe<StringFilter>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export type CollectionWhereUniqueInput = {
@@ -275,277 +286,283 @@ export type CollectionWhereUniqueInput = {
 
 export type DateTimeFilter = {
     equals?: Maybe<Scalars['DateTime']>
-    not?: Maybe<Scalars['DateTime']>
-    in?: Maybe<Array<Scalars['DateTime']>>
-    notIn?: Maybe<Array<Scalars['DateTime']>>
-    lt?: Maybe<Scalars['DateTime']>
-    lte?: Maybe<Scalars['DateTime']>
     gt?: Maybe<Scalars['DateTime']>
     gte?: Maybe<Scalars['DateTime']>
+    in?: Maybe<Array<Scalars['DateTime']>>
+    lt?: Maybe<Scalars['DateTime']>
+    lte?: Maybe<Scalars['DateTime']>
+    not?: Maybe<Scalars['DateTime']>
+    notIn?: Maybe<Array<Scalars['DateTime']>>
 }
 
+/** Inbox user relative content */
 export type Inbox = {
     __typename?: 'Inbox'
-    id: Scalars['String']
-    count: Scalars['Int']
-    items: Array<Item>
+    id?: Maybe<Scalars['String']>
+    /** Non deleted items count in inbox */
+    count?: Maybe<Scalars['Int']>
+    items?: Maybe<Array<Maybe<Item>>>
 }
 
 export type IntFilter = {
     equals?: Maybe<Scalars['Int']>
-    not?: Maybe<Scalars['Int']>
-    in?: Maybe<Array<Scalars['Int']>>
-    notIn?: Maybe<Array<Scalars['Int']>>
-    lt?: Maybe<Scalars['Int']>
-    lte?: Maybe<Scalars['Int']>
     gt?: Maybe<Scalars['Int']>
     gte?: Maybe<Scalars['Int']>
+    in?: Maybe<Array<Scalars['Int']>>
+    lt?: Maybe<Scalars['Int']>
+    lte?: Maybe<Scalars['Int']>
+    not?: Maybe<Scalars['Int']>
+    notIn?: Maybe<Array<Scalars['Int']>>
 }
 
 export type Item = {
     __typename?: 'Item'
-    id: Scalars['String']
     author?: Maybe<Scalars['String']>
-    isDeleted: Scalars['Boolean']
-    title: Scalars['String']
-    position: Scalars['Int']
-    imageUrl?: Maybe<Scalars['String']>
-    productUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
-    provider?: Maybe<Scalars['String']>
     comment?: Maybe<Scalars['String']>
-    type: ItemType
-    meta?: Maybe<Scalars['String']>
     createdAt: Scalars['DateTime']
+    description?: Maybe<Scalars['String']>
+    id: Scalars['String']
+    imageUrl?: Maybe<Scalars['String']>
+    isDeleted: Scalars['Boolean']
+    meta?: Maybe<Scalars['String']>
+    position: Scalars['Int']
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title: Scalars['String']
+    type: ItemType
 }
 
 export type ItemCreateManyWithoutCollectionInput = {
-    create?: Maybe<Array<ItemCreateWithoutCollectionInput>>
     connect?: Maybe<Array<ItemWhereUniqueInput>>
+    create?: Maybe<Array<ItemCreateWithoutCollectionInput>>
 }
 
 export type ItemCreateManyWithoutInboxOwnerInput = {
-    create?: Maybe<Array<ItemCreateWithoutInboxOwnerInput>>
     connect?: Maybe<Array<ItemWhereUniqueInput>>
+    create?: Maybe<Array<ItemCreateWithoutInboxOwnerInput>>
 }
 
 export type ItemCreateWithoutCollectionInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title: Scalars['String']
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type: ItemType
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
     comment?: Maybe<Scalars['String']>
-    meta?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
     inboxOwner?: Maybe<UserCreateOneWithoutInboxedItemsInput>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title: Scalars['String']
+    type: ItemType
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemCreateWithoutInboxOwnerInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title: Scalars['String']
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type: ItemType
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
-    comment?: Maybe<Scalars['String']>
-    meta?: Maybe<Scalars['String']>
     collection?: Maybe<CollectionCreateOneWithoutItemsInput>
+    comment?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title: Scalars['String']
+    type: ItemType
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemFilter = {
     every?: Maybe<ItemWhereInput>
-    some?: Maybe<ItemWhereInput>
     none?: Maybe<ItemWhereInput>
+    some?: Maybe<ItemWhereInput>
 }
 
 export type ItemScalarWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    isDeleted?: Maybe<BooleanFilter>
-    position?: Maybe<IntFilter>
-    title?: Maybe<StringFilter>
-    provider?: Maybe<NullableStringFilter>
-    author?: Maybe<NullableStringFilter>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<NullableStringFilter>
-    imageUrl?: Maybe<NullableStringFilter>
-    description?: Maybe<NullableStringFilter>
-    comment?: Maybe<NullableStringFilter>
-    meta?: Maybe<NullableStringFilter>
     AND?: Maybe<Array<ItemScalarWhereInput>>
-    OR?: Maybe<Array<ItemScalarWhereInput>>
+    author?: Maybe<NullableStringFilter>
+    collectionId?: Maybe<NullableStringFilter>
+    comment?: Maybe<NullableStringFilter>
+    createdAt?: Maybe<DateTimeFilter>
+    description?: Maybe<NullableStringFilter>
+    id?: Maybe<StringFilter>
+    imageUrl?: Maybe<NullableStringFilter>
+    inboxOwnerId?: Maybe<NullableStringFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    meta?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<ItemScalarWhereInput>>
+    OR?: Maybe<Array<ItemScalarWhereInput>>
+    position?: Maybe<IntFilter>
+    productUrl?: Maybe<NullableStringFilter>
+    provider?: Maybe<NullableStringFilter>
+    title?: Maybe<StringFilter>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export enum ItemType {
-    Book = 'book',
     Album = 'album',
+    Article = 'article',
+    Book = 'book',
     Movie = 'movie',
     People = 'people',
-    Video = 'video',
-    Article = 'article',
     Podcast = 'podcast',
     Repository = 'repository',
+    Video = 'video',
     Website = 'website',
 }
 
 export type ItemUpdateInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title?: Maybe<Scalars['String']>
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
-    comment?: Maybe<Scalars['String']>
-    meta?: Maybe<Scalars['String']>
     collection?: Maybe<CollectionUpdateOneWithoutItemsInput>
+    comment?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
     inboxOwner?: Maybe<UserUpdateOneWithoutInboxedItemsInput>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title?: Maybe<Scalars['String']>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemUpdateManyDataInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title?: Maybe<Scalars['String']>
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
     comment?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
     meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title?: Maybe<Scalars['String']>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemUpdateManyWithoutCollectionInput = {
-    create?: Maybe<Array<ItemCreateWithoutCollectionInput>>
     connect?: Maybe<Array<ItemWhereUniqueInput>>
-    set?: Maybe<Array<ItemWhereUniqueInput>>
-    disconnect?: Maybe<Array<ItemWhereUniqueInput>>
+    create?: Maybe<Array<ItemCreateWithoutCollectionInput>>
     delete?: Maybe<Array<ItemWhereUniqueInput>>
+    deleteMany?: Maybe<Array<ItemScalarWhereInput>>
+    disconnect?: Maybe<Array<ItemWhereUniqueInput>>
+    set?: Maybe<Array<ItemWhereUniqueInput>>
     update?: Maybe<Array<ItemUpdateWithWhereUniqueWithoutCollectionInput>>
     updateMany?: Maybe<Array<ItemUpdateManyWithWhereNestedInput>>
-    deleteMany?: Maybe<Array<ItemScalarWhereInput>>
     upsert?: Maybe<Array<ItemUpsertWithWhereUniqueWithoutCollectionInput>>
 }
 
 export type ItemUpdateManyWithoutInboxOwnerInput = {
-    create?: Maybe<Array<ItemCreateWithoutInboxOwnerInput>>
     connect?: Maybe<Array<ItemWhereUniqueInput>>
-    set?: Maybe<Array<ItemWhereUniqueInput>>
-    disconnect?: Maybe<Array<ItemWhereUniqueInput>>
+    create?: Maybe<Array<ItemCreateWithoutInboxOwnerInput>>
     delete?: Maybe<Array<ItemWhereUniqueInput>>
+    deleteMany?: Maybe<Array<ItemScalarWhereInput>>
+    disconnect?: Maybe<Array<ItemWhereUniqueInput>>
+    set?: Maybe<Array<ItemWhereUniqueInput>>
     update?: Maybe<Array<ItemUpdateWithWhereUniqueWithoutInboxOwnerInput>>
     updateMany?: Maybe<Array<ItemUpdateManyWithWhereNestedInput>>
-    deleteMany?: Maybe<Array<ItemScalarWhereInput>>
     upsert?: Maybe<Array<ItemUpsertWithWhereUniqueWithoutInboxOwnerInput>>
 }
 
 export type ItemUpdateManyWithWhereNestedInput = {
-    where: ItemScalarWhereInput
     data: ItemUpdateManyDataInput
+    where: ItemScalarWhereInput
 }
 
 export type ItemUpdateWithoutCollectionDataInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title?: Maybe<Scalars['String']>
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
     comment?: Maybe<Scalars['String']>
-    meta?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
     inboxOwner?: Maybe<UserUpdateOneWithoutInboxedItemsInput>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title?: Maybe<Scalars['String']>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemUpdateWithoutInboxOwnerDataInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    isDeleted?: Maybe<Scalars['Boolean']>
-    position?: Maybe<Scalars['Int']>
-    title?: Maybe<Scalars['String']>
-    provider?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<Scalars['String']>
-    imageUrl?: Maybe<Scalars['String']>
-    description?: Maybe<Scalars['String']>
-    comment?: Maybe<Scalars['String']>
-    meta?: Maybe<Scalars['String']>
     collection?: Maybe<CollectionUpdateOneWithoutItemsInput>
+    comment?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    description?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    imageUrl?: Maybe<Scalars['String']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    meta?: Maybe<Scalars['String']>
+    position?: Maybe<Scalars['Int']>
+    productUrl?: Maybe<Scalars['String']>
+    provider?: Maybe<Scalars['String']>
+    title?: Maybe<Scalars['String']>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type ItemUpdateWithWhereUniqueWithoutCollectionInput = {
-    where: ItemWhereUniqueInput
     data: ItemUpdateWithoutCollectionDataInput
+    where: ItemWhereUniqueInput
 }
 
 export type ItemUpdateWithWhereUniqueWithoutInboxOwnerInput = {
-    where: ItemWhereUniqueInput
     data: ItemUpdateWithoutInboxOwnerDataInput
+    where: ItemWhereUniqueInput
 }
 
 export type ItemUpsertWithWhereUniqueWithoutCollectionInput = {
-    where: ItemWhereUniqueInput
-    update: ItemUpdateWithoutCollectionDataInput
     create: ItemCreateWithoutCollectionInput
+    update: ItemUpdateWithoutCollectionDataInput
+    where: ItemWhereUniqueInput
 }
 
 export type ItemUpsertWithWhereUniqueWithoutInboxOwnerInput = {
-    where: ItemWhereUniqueInput
-    update: ItemUpdateWithoutInboxOwnerDataInput
     create: ItemCreateWithoutInboxOwnerInput
+    update: ItemUpdateWithoutInboxOwnerDataInput
+    where: ItemWhereUniqueInput
 }
 
 export type ItemWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    isDeleted?: Maybe<BooleanFilter>
-    position?: Maybe<IntFilter>
-    title?: Maybe<StringFilter>
-    provider?: Maybe<NullableStringFilter>
-    author?: Maybe<NullableStringFilter>
-    type?: Maybe<ItemType>
-    productUrl?: Maybe<NullableStringFilter>
-    imageUrl?: Maybe<NullableStringFilter>
-    description?: Maybe<NullableStringFilter>
-    comment?: Maybe<NullableStringFilter>
-    meta?: Maybe<NullableStringFilter>
     AND?: Maybe<Array<ItemWhereInput>>
-    OR?: Maybe<Array<ItemWhereInput>>
-    NOT?: Maybe<Array<ItemWhereInput>>
+    author?: Maybe<NullableStringFilter>
     collection?: Maybe<CollectionWhereInput>
+    collectionId?: Maybe<NullableStringFilter>
+    comment?: Maybe<NullableStringFilter>
+    createdAt?: Maybe<DateTimeFilter>
+    description?: Maybe<NullableStringFilter>
+    id?: Maybe<StringFilter>
+    imageUrl?: Maybe<NullableStringFilter>
     inboxOwner?: Maybe<UserWhereInput>
+    inboxOwnerId?: Maybe<NullableStringFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    meta?: Maybe<NullableStringFilter>
+    NOT?: Maybe<Array<ItemWhereInput>>
+    OR?: Maybe<Array<ItemWhereInput>>
+    position?: Maybe<IntFilter>
+    productUrl?: Maybe<NullableStringFilter>
+    provider?: Maybe<NullableStringFilter>
+    title?: Maybe<StringFilter>
+    type?: Maybe<ItemType>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export type ItemWhereUniqueInput = {
@@ -564,10 +581,14 @@ export type Mutation = {
     updateOneUser?: Maybe<User>
     updateOneItem?: Maybe<Item>
     updateOneCollection?: Maybe<Collection>
-    signS3: S3SignedPath
-    createNewUser: User
-    createEmptyCollection: Collection
-    createEmptySection: Section
+    signS3?: Maybe<S3SignedPath>
+    createNewUser?: Maybe<User>
+    createEmptyCollection?: Maybe<Collection>
+    createEmptySection?: Maybe<Section>
+    /**
+     * Mutation changing the position of an item from his $oldIndex to the $newIndex.
+     *             It takes *indexes* (not position) and return changed items with new position.
+     */
     changeItemPosition: Array<Item>
     createItemFromSearch: Item
     createItemFromUrl: Item
@@ -603,10 +624,10 @@ export type MutationSignS3Args = {
 }
 
 export type MutationCreateNewUserArgs = {
-    slug: Scalars['String']
     authUserId: Scalars['String']
-    pictureUrl: Scalars['String']
     firstname: Scalars['String']
+    pictureUrl: Scalars['String']
+    slug: Scalars['String']
 }
 
 export type MutationCreateEmptyCollectionArgs = {
@@ -615,35 +636,35 @@ export type MutationCreateEmptyCollectionArgs = {
 
 export type MutationChangeItemPositionArgs = {
     collectionId: Scalars['ID']
-    oldIndex: Scalars['Int']
     newIndex: Scalars['Int']
+    oldIndex: Scalars['Int']
 }
 
 export type MutationCreateItemFromSearchArgs = {
-    id: Scalars['String']
-    kind: Scalars['String']
     collectionId?: Maybe<Scalars['String']>
+    id: Scalars['String']
     inbox?: Maybe<Scalars['Boolean']>
+    kind: Scalars['String']
 }
 
 export type MutationCreateItemFromUrlArgs = {
-    url: Scalars['String']
     collectionId?: Maybe<Scalars['String']>
     inbox?: Maybe<Scalars['Boolean']>
+    url: Scalars['String']
 }
 
 export type NullableStringFilter = {
+    contains?: Maybe<Scalars['String']>
+    endsWith?: Maybe<Scalars['String']>
     equals?: Maybe<Scalars['String']>
-    not?: Maybe<Scalars['String']>
-    in?: Maybe<Array<Scalars['String']>>
-    notIn?: Maybe<Array<Scalars['String']>>
-    lt?: Maybe<Scalars['String']>
-    lte?: Maybe<Scalars['String']>
     gt?: Maybe<Scalars['String']>
     gte?: Maybe<Scalars['String']>
-    contains?: Maybe<Scalars['String']>
+    in?: Maybe<Array<Scalars['String']>>
+    lt?: Maybe<Scalars['String']>
+    lte?: Maybe<Scalars['String']>
+    not?: Maybe<Scalars['String']>
+    notIn?: Maybe<Array<Scalars['String']>>
     startsWith?: Maybe<Scalars['String']>
-    endsWith?: Maybe<Scalars['String']>
 }
 
 export enum OrderByArg {
@@ -656,6 +677,7 @@ export type Query = {
     breadcrumbs: Array<Breadcrumb>
     collection?: Maybe<Collection>
     collections: Array<Collection>
+    /** Inbox user relative content */
     inbox?: Maybe<Inbox>
     items: Array<Item>
     modal: Modal
@@ -671,28 +693,28 @@ export type QueryCollectionArgs = {
 }
 
 export type QueryCollectionsArgs = {
-    where?: Maybe<QueryCollectionsWhereInput>
-    orderBy?: Maybe<QueryCollectionsOrderByInput>
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<CollectionWhereUniqueInput>
+    before?: Maybe<CollectionWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    orderBy?: Maybe<QueryCollectionsOrderByInput>
+    skip?: Maybe<Scalars['Int']>
+    where?: Maybe<QueryCollectionsWhereInput>
 }
 
 export type QueryItemsArgs = {
-    where?: Maybe<QueryItemsWhereInput>
-    orderBy?: Maybe<QueryItemsOrderByInput>
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<ItemWhereUniqueInput>
+    before?: Maybe<ItemWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    orderBy?: Maybe<QueryItemsOrderByInput>
+    skip?: Maybe<Scalars['Int']>
+    where?: Maybe<QueryItemsWhereInput>
 }
 
 export type QuerySearchArgs = {
-    q: Scalars['String']
     kind: Scalars['String']
+    q: Scalars['String']
 }
 
 export type QuerySectionArgs = {
@@ -700,13 +722,13 @@ export type QuerySectionArgs = {
 }
 
 export type QuerySectionsArgs = {
-    where?: Maybe<QuerySectionsWhereInput>
-    orderBy?: Maybe<QuerySectionsOrderByInput>
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<SectionWhereUniqueInput>
+    before?: Maybe<SectionWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    orderBy?: Maybe<QuerySectionsOrderByInput>
+    skip?: Maybe<Scalars['Int']>
+    where?: Maybe<QuerySectionsWhereInput>
 }
 
 export type QueryUserArgs = {
@@ -719,8 +741,8 @@ export type QueryCollectionsOrderByInput = {
 
 export type QueryCollectionsWhereInput = {
     isDeleted?: Maybe<BooleanFilter>
-    section?: Maybe<SectionWhereInput>
     owner?: Maybe<UserWhereInput>
+    section?: Maybe<SectionWhereInput>
 }
 
 export type QueryItemsOrderByInput = {
@@ -728,8 +750,8 @@ export type QueryItemsOrderByInput = {
 }
 
 export type QueryItemsWhereInput = {
-    isDeleted?: Maybe<BooleanFilter>
     collection?: Maybe<CollectionWhereInput>
+    isDeleted?: Maybe<BooleanFilter>
 }
 
 export type QuerySectionsOrderByInput = {
@@ -750,31 +772,31 @@ export type S3SignedPath = {
 
 export type SearchItem = {
     __typename?: 'SearchItem'
-    id: Scalars['String']
-    title: Scalars['String']
+    id?: Maybe<Scalars['String']>
+    title?: Maybe<Scalars['String']>
     author?: Maybe<Scalars['String']>
-    type: Scalars['String']
+    type?: Maybe<Scalars['String']>
 }
 
 export type Section = {
     __typename?: 'Section'
-    id: Scalars['String']
-    slug: Scalars['String']
-    index: Scalars['Int']
-    name?: Maybe<Scalars['String']>
-    createdAt: Scalars['DateTime']
     collections: Array<Collection>
+    createdAt: Scalars['DateTime']
+    id: Scalars['String']
+    index: Scalars['Int']
     isExpanded: Scalars['Boolean']
+    name?: Maybe<Scalars['String']>
+    slug: Scalars['String']
 }
 
 export type SectionCollectionsArgs = {
-    where?: Maybe<SectionCollectionsWhereInput>
-    orderBy?: Maybe<SectionCollectionsOrderByInput>
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<CollectionWhereUniqueInput>
+    before?: Maybe<CollectionWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    orderBy?: Maybe<SectionCollectionsOrderByInput>
+    skip?: Maybe<Scalars['Int']>
+    where?: Maybe<SectionCollectionsWhereInput>
 }
 
 export type SectionCollectionsOrderByInput = {
@@ -787,162 +809,164 @@ export type SectionCollectionsWhereInput = {
 }
 
 export type SectionCreateManyWithoutOwnerInput = {
-    create?: Maybe<Array<SectionCreateWithoutOwnerInput>>
     connect?: Maybe<Array<SectionWhereUniqueInput>>
+    create?: Maybe<Array<SectionCreateWithoutOwnerInput>>
 }
 
 export type SectionCreateOneWithoutCollectionsInput = {
-    create?: Maybe<SectionCreateWithoutCollectionsInput>
     connect?: Maybe<SectionWhereUniqueInput>
+    create?: Maybe<SectionCreateWithoutCollectionsInput>
 }
 
 export type SectionCreateWithoutCollectionsInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
     isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
     owner: UserCreateOneWithoutSectionsInput
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionCreateWithoutOwnerInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug: Scalars['String']
-    name?: Maybe<Scalars['String']>
-    index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     collections?: Maybe<CollectionCreateManyWithoutSectionInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
+    index?: Maybe<Scalars['Int']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionFilter = {
     every?: Maybe<SectionWhereInput>
-    some?: Maybe<SectionWhereInput>
     none?: Maybe<SectionWhereInput>
+    some?: Maybe<SectionWhereInput>
 }
 
 export type SectionScalarWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    slug?: Maybe<StringFilter>
-    name?: Maybe<NullableStringFilter>
-    index?: Maybe<IntFilter>
-    collections?: Maybe<CollectionFilter>
-    isExpanded?: Maybe<BooleanFilter>
-    isDeleted?: Maybe<BooleanFilter>
     AND?: Maybe<Array<SectionScalarWhereInput>>
-    OR?: Maybe<Array<SectionScalarWhereInput>>
+    collections?: Maybe<CollectionFilter>
+    createdAt?: Maybe<DateTimeFilter>
+    id?: Maybe<StringFilter>
+    index?: Maybe<IntFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    isExpanded?: Maybe<BooleanFilter>
+    name?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<SectionScalarWhereInput>>
+    OR?: Maybe<Array<SectionScalarWhereInput>>
+    ownerId?: Maybe<StringFilter>
+    slug?: Maybe<StringFilter>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export type SectionUpdateInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     collections?: Maybe<CollectionUpdateManyWithoutSectionInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
+    index?: Maybe<Scalars['Int']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
     owner?: Maybe<UserUpdateOneRequiredWithoutSectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionUpdateManyDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
     isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionUpdateManyWithoutOwnerInput = {
-    create?: Maybe<Array<SectionCreateWithoutOwnerInput>>
     connect?: Maybe<Array<SectionWhereUniqueInput>>
-    set?: Maybe<Array<SectionWhereUniqueInput>>
-    disconnect?: Maybe<Array<SectionWhereUniqueInput>>
+    create?: Maybe<Array<SectionCreateWithoutOwnerInput>>
     delete?: Maybe<Array<SectionWhereUniqueInput>>
+    deleteMany?: Maybe<Array<SectionScalarWhereInput>>
+    disconnect?: Maybe<Array<SectionWhereUniqueInput>>
+    set?: Maybe<Array<SectionWhereUniqueInput>>
     update?: Maybe<Array<SectionUpdateWithWhereUniqueWithoutOwnerInput>>
     updateMany?: Maybe<Array<SectionUpdateManyWithWhereNestedInput>>
-    deleteMany?: Maybe<Array<SectionScalarWhereInput>>
     upsert?: Maybe<Array<SectionUpsertWithWhereUniqueWithoutOwnerInput>>
 }
 
 export type SectionUpdateManyWithWhereNestedInput = {
-    where: SectionScalarWhereInput
     data: SectionUpdateManyDataInput
+    where: SectionScalarWhereInput
 }
 
 export type SectionUpdateOneRequiredWithoutCollectionsInput = {
-    create?: Maybe<SectionCreateWithoutCollectionsInput>
     connect?: Maybe<SectionWhereUniqueInput>
+    create?: Maybe<SectionCreateWithoutCollectionsInput>
     update?: Maybe<SectionUpdateWithoutCollectionsDataInput>
     upsert?: Maybe<SectionUpsertWithoutCollectionsInput>
 }
 
 export type SectionUpdateWithoutCollectionsDataInput = {
-    id?: Maybe<Scalars['String']>
     createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
     isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
     owner?: Maybe<UserUpdateOneRequiredWithoutSectionsInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionUpdateWithoutOwnerDataInput = {
-    id?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    slug?: Maybe<Scalars['String']>
-    name?: Maybe<Scalars['String']>
-    index?: Maybe<Scalars['Int']>
-    isExpanded?: Maybe<Scalars['Boolean']>
-    isDeleted?: Maybe<Scalars['Boolean']>
     collections?: Maybe<CollectionUpdateManyWithoutSectionInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    id?: Maybe<Scalars['String']>
+    index?: Maybe<Scalars['Int']>
+    isDeleted?: Maybe<Scalars['Boolean']>
+    isExpanded?: Maybe<Scalars['Boolean']>
+    name?: Maybe<Scalars['String']>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type SectionUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: SectionWhereUniqueInput
     data: SectionUpdateWithoutOwnerDataInput
+    where: SectionWhereUniqueInput
 }
 
 export type SectionUpsertWithoutCollectionsInput = {
-    update: SectionUpdateWithoutCollectionsDataInput
     create: SectionCreateWithoutCollectionsInput
+    update: SectionUpdateWithoutCollectionsDataInput
 }
 
 export type SectionUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: SectionWhereUniqueInput
-    update: SectionUpdateWithoutOwnerDataInput
     create: SectionCreateWithoutOwnerInput
+    update: SectionUpdateWithoutOwnerDataInput
+    where: SectionWhereUniqueInput
 }
 
 export type SectionWhereInput = {
-    id?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    slug?: Maybe<StringFilter>
-    name?: Maybe<NullableStringFilter>
-    index?: Maybe<IntFilter>
-    collections?: Maybe<CollectionFilter>
-    isExpanded?: Maybe<BooleanFilter>
-    isDeleted?: Maybe<BooleanFilter>
     AND?: Maybe<Array<SectionWhereInput>>
-    OR?: Maybe<Array<SectionWhereInput>>
+    collections?: Maybe<CollectionFilter>
+    createdAt?: Maybe<DateTimeFilter>
+    id?: Maybe<StringFilter>
+    index?: Maybe<IntFilter>
+    isDeleted?: Maybe<BooleanFilter>
+    isExpanded?: Maybe<BooleanFilter>
+    name?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<SectionWhereInput>>
+    OR?: Maybe<Array<SectionWhereInput>>
     owner?: Maybe<UserWhereInput>
+    ownerId?: Maybe<StringFilter>
+    slug?: Maybe<StringFilter>
+    updatedAt?: Maybe<DateTimeFilter>
 }
 
 export type SectionWhereUniqueInput = {
@@ -950,300 +974,300 @@ export type SectionWhereUniqueInput = {
 }
 
 export type StringFilter = {
+    contains?: Maybe<Scalars['String']>
+    endsWith?: Maybe<Scalars['String']>
     equals?: Maybe<Scalars['String']>
-    not?: Maybe<Scalars['String']>
-    in?: Maybe<Array<Scalars['String']>>
-    notIn?: Maybe<Array<Scalars['String']>>
-    lt?: Maybe<Scalars['String']>
-    lte?: Maybe<Scalars['String']>
     gt?: Maybe<Scalars['String']>
     gte?: Maybe<Scalars['String']>
-    contains?: Maybe<Scalars['String']>
+    in?: Maybe<Array<Scalars['String']>>
+    lt?: Maybe<Scalars['String']>
+    lte?: Maybe<Scalars['String']>
+    not?: Maybe<Scalars['String']>
+    notIn?: Maybe<Array<Scalars['String']>>
     startsWith?: Maybe<Scalars['String']>
-    endsWith?: Maybe<Scalars['String']>
 }
 
 export type User = {
     __typename?: 'User'
-    id: Scalars['String']
-    slug: Scalars['String']
     authUserId?: Maybe<Scalars['String']>
     biography?: Maybe<Scalars['String']>
-    pictureUrl: Scalars['String']
-    label?: Maybe<Scalars['String']>
     firstname: Scalars['String']
-    sections: Array<Section>
-    website?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
     github?: Maybe<Scalars['String']>
+    id: Scalars['String']
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl: Scalars['String']
+    sections: Array<Section>
+    slug: Scalars['String']
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserSectionsArgs = {
-    skip?: Maybe<Scalars['Int']>
-    after?: Maybe<Scalars['String']>
-    before?: Maybe<Scalars['String']>
+    after?: Maybe<SectionWhereUniqueInput>
+    before?: Maybe<SectionWhereUniqueInput>
     first?: Maybe<Scalars['Int']>
     last?: Maybe<Scalars['Int']>
+    skip?: Maybe<Scalars['Int']>
 }
 
 export type UserCreateInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug: Scalars['String']
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname: Scalars['String']
-    pictureUrl: Scalars['String']
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
     collections?: Maybe<CollectionCreateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname: Scalars['String']
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemCreateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl: Scalars['String']
+    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserCreateOneWithoutCollectionsInput = {
-    create?: Maybe<UserCreateWithoutCollectionsInput>
     connect?: Maybe<UserWhereUniqueInput>
+    create?: Maybe<UserCreateWithoutCollectionsInput>
 }
 
 export type UserCreateOneWithoutInboxedItemsInput = {
-    create?: Maybe<UserCreateWithoutInboxedItemsInput>
     connect?: Maybe<UserWhereUniqueInput>
+    create?: Maybe<UserCreateWithoutInboxedItemsInput>
 }
 
 export type UserCreateOneWithoutSectionsInput = {
-    create?: Maybe<UserCreateWithoutSectionsInput>
     connect?: Maybe<UserWhereUniqueInput>
+    create?: Maybe<UserCreateWithoutSectionsInput>
 }
 
 export type UserCreateWithoutCollectionsInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug: Scalars['String']
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname: Scalars['String']
-    pictureUrl: Scalars['String']
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname: Scalars['String']
     github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemCreateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl: Scalars['String']
+    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserCreateWithoutInboxedItemsInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug: Scalars['String']
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname: Scalars['String']
-    pictureUrl: Scalars['String']
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
     collections?: Maybe<CollectionCreateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname: Scalars['String']
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl: Scalars['String']
+    sections?: Maybe<SectionCreateManyWithoutOwnerInput>
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserCreateWithoutSectionsInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug: Scalars['String']
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname: Scalars['String']
-    pictureUrl: Scalars['String']
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
     collections?: Maybe<CollectionCreateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname: Scalars['String']
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemCreateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl: Scalars['String']
+    slug: Scalars['String']
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserUpdateInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname?: Maybe<Scalars['String']>
-    pictureUrl?: Maybe<Scalars['String']>
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
     collections?: Maybe<CollectionUpdateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname?: Maybe<Scalars['String']>
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemUpdateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl?: Maybe<Scalars['String']>
+    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserUpdateOneRequiredWithoutCollectionsInput = {
-    create?: Maybe<UserCreateWithoutCollectionsInput>
     connect?: Maybe<UserWhereUniqueInput>
+    create?: Maybe<UserCreateWithoutCollectionsInput>
     update?: Maybe<UserUpdateWithoutCollectionsDataInput>
     upsert?: Maybe<UserUpsertWithoutCollectionsInput>
 }
 
 export type UserUpdateOneRequiredWithoutSectionsInput = {
-    create?: Maybe<UserCreateWithoutSectionsInput>
     connect?: Maybe<UserWhereUniqueInput>
+    create?: Maybe<UserCreateWithoutSectionsInput>
     update?: Maybe<UserUpdateWithoutSectionsDataInput>
     upsert?: Maybe<UserUpsertWithoutSectionsInput>
 }
 
 export type UserUpdateOneWithoutInboxedItemsInput = {
-    create?: Maybe<UserCreateWithoutInboxedItemsInput>
     connect?: Maybe<UserWhereUniqueInput>
-    disconnect?: Maybe<Scalars['Boolean']>
+    create?: Maybe<UserCreateWithoutInboxedItemsInput>
     delete?: Maybe<Scalars['Boolean']>
+    disconnect?: Maybe<Scalars['Boolean']>
     update?: Maybe<UserUpdateWithoutInboxedItemsDataInput>
     upsert?: Maybe<UserUpsertWithoutInboxedItemsInput>
 }
 
 export type UserUpdateWithoutCollectionsDataInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname?: Maybe<Scalars['String']>
-    pictureUrl?: Maybe<Scalars['String']>
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname?: Maybe<Scalars['String']>
     github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemUpdateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl?: Maybe<Scalars['String']>
+    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserUpdateWithoutInboxedItemsDataInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname?: Maybe<Scalars['String']>
-    pictureUrl?: Maybe<Scalars['String']>
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
-    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
     collections?: Maybe<CollectionUpdateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname?: Maybe<Scalars['String']>
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl?: Maybe<Scalars['String']>
+    sections?: Maybe<SectionUpdateManyWithoutOwnerInput>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserUpdateWithoutSectionsDataInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
-    slug?: Maybe<Scalars['String']>
-    createdAt?: Maybe<Scalars['DateTime']>
-    updatedAt?: Maybe<Scalars['DateTime']>
-    firstname?: Maybe<Scalars['String']>
-    pictureUrl?: Maybe<Scalars['String']>
     biography?: Maybe<Scalars['String']>
-    linkedin?: Maybe<Scalars['String']>
-    github?: Maybe<Scalars['String']>
-    mail?: Maybe<Scalars['String']>
-    youtube?: Maybe<Scalars['String']>
-    website?: Maybe<Scalars['String']>
-    label?: Maybe<Scalars['String']>
     collections?: Maybe<CollectionUpdateManyWithoutOwnerInput>
+    createdAt?: Maybe<Scalars['DateTime']>
+    firstname?: Maybe<Scalars['String']>
+    github?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     inboxedItems?: Maybe<ItemUpdateManyWithoutInboxOwnerInput>
+    label?: Maybe<Scalars['String']>
+    linkedin?: Maybe<Scalars['String']>
+    mail?: Maybe<Scalars['String']>
+    pictureUrl?: Maybe<Scalars['String']>
+    slug?: Maybe<Scalars['String']>
+    updatedAt?: Maybe<Scalars['DateTime']>
+    website?: Maybe<Scalars['String']>
+    youtube?: Maybe<Scalars['String']>
 }
 
 export type UserUpsertWithoutCollectionsInput = {
-    update: UserUpdateWithoutCollectionsDataInput
     create: UserCreateWithoutCollectionsInput
+    update: UserUpdateWithoutCollectionsDataInput
 }
 
 export type UserUpsertWithoutInboxedItemsInput = {
-    update: UserUpdateWithoutInboxedItemsDataInput
     create: UserCreateWithoutInboxedItemsInput
+    update: UserUpdateWithoutInboxedItemsDataInput
 }
 
 export type UserUpsertWithoutSectionsInput = {
-    update: UserUpdateWithoutSectionsDataInput
     create: UserCreateWithoutSectionsInput
+    update: UserUpdateWithoutSectionsDataInput
 }
 
 export type UserWhereInput = {
-    id?: Maybe<StringFilter>
-    authUserId?: Maybe<NullableStringFilter>
-    slug?: Maybe<StringFilter>
-    createdAt?: Maybe<DateTimeFilter>
-    updatedAt?: Maybe<DateTimeFilter>
-    firstname?: Maybe<StringFilter>
-    pictureUrl?: Maybe<StringFilter>
-    biography?: Maybe<NullableStringFilter>
-    linkedin?: Maybe<NullableStringFilter>
-    github?: Maybe<NullableStringFilter>
-    mail?: Maybe<NullableStringFilter>
-    youtube?: Maybe<NullableStringFilter>
-    website?: Maybe<NullableStringFilter>
-    label?: Maybe<NullableStringFilter>
-    sections?: Maybe<SectionFilter>
-    collections?: Maybe<CollectionFilter>
-    inboxedItems?: Maybe<ItemFilter>
     AND?: Maybe<Array<UserWhereInput>>
-    OR?: Maybe<Array<UserWhereInput>>
+    authUserId?: Maybe<NullableStringFilter>
+    biography?: Maybe<NullableStringFilter>
+    collections?: Maybe<CollectionFilter>
+    createdAt?: Maybe<DateTimeFilter>
+    firstname?: Maybe<StringFilter>
+    github?: Maybe<NullableStringFilter>
+    id?: Maybe<StringFilter>
+    inboxedItems?: Maybe<ItemFilter>
+    label?: Maybe<NullableStringFilter>
+    linkedin?: Maybe<NullableStringFilter>
+    mail?: Maybe<NullableStringFilter>
     NOT?: Maybe<Array<UserWhereInput>>
+    OR?: Maybe<Array<UserWhereInput>>
+    pictureUrl?: Maybe<StringFilter>
+    sections?: Maybe<SectionFilter>
+    slug?: Maybe<StringFilter>
+    updatedAt?: Maybe<DateTimeFilter>
+    website?: Maybe<NullableStringFilter>
+    youtube?: Maybe<NullableStringFilter>
 }
 
 export type UserWhereUniqueInput = {
-    id?: Maybe<Scalars['String']>
     authUserId?: Maybe<Scalars['String']>
+    id?: Maybe<Scalars['String']>
     slug?: Maybe<Scalars['String']>
 }
 
-export type CreateNewUserMutationVariables = {
+export type CreateNewUserMutationVariables = Exact<{
     slug: Scalars['String']
     authUserId: Scalars['String']
     pictureUrl: Scalars['String']
     firstname: Scalars['String']
-}
+}>
 
 export type CreateNewUserMutation = { __typename?: 'Mutation' } & {
-    user: { __typename?: 'User' } & UserBasicFragment
+    user?: Maybe<{ __typename?: 'User' } & UserBasicFragment>
 }
 
-export type UpdateCollectionMutationVariables = {
+export type UpdateCollectionMutationVariables = Exact<{
     collectionId: Scalars['String']
     slug: Scalars['String']
     name?: Maybe<Scalars['String']>
     detail?: Maybe<Scalars['String']>
-}
+}>
 
 export type UpdateCollectionMutation = { __typename?: 'Mutation' } & {
-    collection: Maybe<
+    collection?: Maybe<
         { __typename?: 'Collection' } & Pick<
             Collection,
             'id' | 'slug' | 'name' | 'detail'
@@ -1251,23 +1275,23 @@ export type UpdateCollectionMutation = { __typename?: 'Mutation' } & {
     >
 }
 
-export type GetCollectionIdQueryVariables = {
+export type GetCollectionIdQueryVariables = Exact<{
     collectionId: Scalars['String']
-}
+}>
 
 export type GetCollectionIdQuery = { __typename?: 'Query' } & {
-    collection: Maybe<
+    collection?: Maybe<
         { __typename?: 'Collection' } & Pick<Collection, 'createdAt'> &
             CollectionBasicFragment
     >
 }
 
-export type DeleteCollectionMutationVariables = {
+export type DeleteCollectionMutationVariables = Exact<{
     id: Scalars['String']
-}
+}>
 
 export type DeleteCollectionMutation = { __typename?: 'Mutation' } & {
-    updateOneCollection: Maybe<
+    updateOneCollection?: Maybe<
         { __typename?: 'Collection' } & Pick<
             Collection,
             'id' | 'slug' | 'isDeleted'
@@ -1275,12 +1299,12 @@ export type DeleteCollectionMutation = { __typename?: 'Mutation' } & {
     >
 }
 
-export type UnDeleteCollectionMutationVariables = {
+export type UnDeleteCollectionMutationVariables = Exact<{
     id: Scalars['String']
-}
+}>
 
 export type UnDeleteCollectionMutation = { __typename?: 'Mutation' } & {
-    updateOneCollection: Maybe<
+    updateOneCollection?: Maybe<
         { __typename?: 'Collection' } & Pick<
             Collection,
             'id' | 'slug' | 'isDeleted'
@@ -1288,163 +1312,168 @@ export type UnDeleteCollectionMutation = { __typename?: 'Mutation' } & {
     >
 }
 
-export type MoveItemFromCollectionToCollectionMutationVariables = {
+export type MoveItemFromCollectionToCollectionMutationVariables = Exact<{
     itemId: Scalars['String']
     collectionId: Scalars['String']
-}
+}>
 
 export type MoveItemFromCollectionToCollectionMutation = {
     __typename?: 'Mutation'
-} & { updateOneItem: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
+} & { updateOneItem?: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
 
-export type MoveItemFromCollectionToInboxMutationVariables = {
+export type MoveItemFromCollectionToInboxMutationVariables = Exact<{
     itemId: Scalars['String']
     authUserId: Scalars['String']
-}
+}>
 
 export type MoveItemFromCollectionToInboxMutation = {
     __typename?: 'Mutation'
-} & { updateOneItem: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
+} & { updateOneItem?: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
 
-export type GetInboxQueryVariables = {}
+export type GetInboxQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetInboxQuery = { __typename?: 'Query' } & {
-    inbox: Maybe<
+    inbox?: Maybe<
         { __typename?: 'Inbox' } & Pick<Inbox, 'id'> & {
-                items: Array<
-                    { __typename?: 'Item' } & ItemPreviewFragment &
-                        ItemDetailFragment
+                items?: Maybe<
+                    Array<
+                        Maybe<
+                            { __typename?: 'Item' } & ItemPreviewFragment &
+                                ItemDetailFragment
+                        >
+                    >
                 >
             }
     >
 }
 
-export type MoveItemFromInboxToCollectionMutationVariables = {
+export type MoveItemFromInboxToCollectionMutationVariables = Exact<{
     itemId: Scalars['String']
     collectionId: Scalars['String']
-}
+}>
 
 export type MoveItemFromInboxToCollectionMutation = {
     __typename?: 'Mutation'
-} & { updateOneItem: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
+} & { updateOneItem?: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id'>> }
 
-export type GetSectionQueryVariables = {
+export type GetSectionQueryVariables = Exact<{
     sectionId: Scalars['String']
-}
+}>
 
 export type GetSectionQuery = { __typename?: 'Query' } & {
-    section: Maybe<{ __typename?: 'Section' } & SectionDetailsFragment>
+    section?: Maybe<{ __typename?: 'Section' } & SectionDetailsFragment>
 }
 
-export type DeleteSectionMutationVariables = {
+export type DeleteSectionMutationVariables = Exact<{
     sectionId: Scalars['String']
-}
+}>
 
 export type DeleteSectionMutation = { __typename?: 'Mutation' } & {
-    updateOneSection: Maybe<
+    updateOneSection?: Maybe<
         { __typename?: 'Section' } & Pick<Section, 'id' | 'slug'> & {
                 title: Section['name']
             }
     >
 }
 
-export type UpdateSectionMutationVariables = {
+export type UpdateSectionMutationVariables = Exact<{
     sectionId: Scalars['String']
     title?: Maybe<Scalars['String']>
-}
+}>
 
 export type UpdateSectionMutation = { __typename?: 'Mutation' } & {
-    updateOneSection: Maybe<
+    updateOneSection?: Maybe<
         { __typename?: 'Section' } & Pick<Section, 'id' | 'slug' | 'index'> & {
                 title: Section['name']
             }
     >
 }
 
-export type CreateEmptyCollectionMutationVariables = {
+export type CreateEmptyCollectionMutationVariables = Exact<{
     sectionId: Scalars['ID']
-}
+}>
 
 export type CreateEmptyCollectionMutation = { __typename?: 'Mutation' } & {
-    collection: { __typename?: 'Collection' } & Pick<
-        Collection,
-        'id' | 'slug' | 'name'
+    collection?: Maybe<
+        { __typename?: 'Collection' } & Pick<Collection, 'id' | 'slug' | 'name'>
     >
 }
 
-export type GetSettingsQueryVariables = {
+export type GetSettingsQueryVariables = Exact<{
     authUserId: Scalars['String']
-}
+}>
 
 export type GetSettingsQuery = { __typename?: 'Query' } & {
-    user: Maybe<{ __typename?: 'User' } & UserBasicFragment>
+    user?: Maybe<{ __typename?: 'User' } & UserBasicFragment>
 }
 
-export type UpdateAvatarMutationVariables = {
+export type UpdateAvatarMutationVariables = Exact<{
     authUserId: Scalars['String']
     pictureUrl: Scalars['String']
-}
+}>
 
 export type UpdateAvatarMutation = { __typename?: 'Mutation' } & {
-    updateOneUser: Maybe<{ __typename?: 'User' } & UserBasicFragment>
+    updateOneUser?: Maybe<{ __typename?: 'User' } & UserBasicFragment>
 }
 
-export type UpdateSettingsMutationVariables = {
+export type UpdateSettingsMutationVariables = Exact<{
     authUserId: Scalars['String']
     slug: Scalars['String']
     biography: Scalars['String']
     firstname: Scalars['String']
-}
+}>
 
 export type UpdateSettingsMutation = { __typename?: 'Mutation' } & {
-    updateOneUser: Maybe<{ __typename?: 'User' } & UserBasicFragment>
+    updateOneUser?: Maybe<{ __typename?: 'User' } & UserBasicFragment>
 }
 
-export type CheckUserSlugQueryVariables = {
+export type CheckUserSlugQueryVariables = Exact<{
     slug: Scalars['String']
-}
+}>
 
 export type CheckUserSlugQuery = { __typename?: 'Query' } & {
-    user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'slug'>>
+    user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'slug'>>
 }
 
-export type SignS3MutationVariables = {
+export type SignS3MutationVariables = Exact<{
     fileName: Scalars['String']
     fileType: Scalars['String']
-}
+}>
 
 export type SignS3Mutation = { __typename?: 'Mutation' } & {
-    signS3: { __typename?: 'S3SignedPath' } & Pick<
-        S3SignedPath,
-        'signedRequest' | 'url'
+    signS3?: Maybe<
+        { __typename?: 'S3SignedPath' } & Pick<
+            S3SignedPath,
+            'signedRequest' | 'url'
+        >
     >
 }
 
-export type CreateItemFromUrlMutationVariables = {
+export type CreateItemFromUrlMutationVariables = Exact<{
     url: Scalars['String']
     collectionId?: Maybe<Scalars['String']>
     inbox?: Maybe<Scalars['Boolean']>
-}
+}>
 
 export type CreateItemFromUrlMutation = { __typename?: 'Mutation' } & {
     items: { __typename?: 'Item' } & ItemPreviewFragment & ItemDetailFragment
 }
 
-export type CreateItemFromSearchMutationVariables = {
+export type CreateItemFromSearchMutationVariables = Exact<{
     id: Scalars['String']
     kind: Scalars['String']
     collectionId?: Maybe<Scalars['String']>
     inbox?: Maybe<Scalars['Boolean']>
-}
+}>
 
 export type CreateItemFromSearchMutation = { __typename?: 'Mutation' } & {
     items: { __typename?: 'Item' } & ItemPreviewFragment & ItemDetailFragment
 }
 
-export type SearchItemQueryVariables = {
+export type SearchItemQueryVariables = Exact<{
     query: Scalars['String']
     kind: Scalars['String']
-}
+}>
 
 export type SearchItemQuery = { __typename?: 'Query' } & {
     search: Array<
@@ -1455,40 +1484,42 @@ export type SearchItemQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type DeleteItemMutationVariables = {
+export type DeleteItemMutationVariables = Exact<{
     id: Scalars['String']
-}
+}>
 
 export type DeleteItemMutation = { __typename?: 'Mutation' } & {
-    updateOneItem: Maybe<
+    updateOneItem?: Maybe<
         { __typename?: 'Item' } & Pick<Item, 'id' | 'isDeleted'>
     >
 }
 
-export type SaveCommentItemMutationVariables = {
+export type SaveCommentItemMutationVariables = Exact<{
     id: Scalars['String']
     comment: Scalars['String']
-}
+}>
 
 export type SaveCommentItemMutation = { __typename?: 'Mutation' } & {
-    updateOneItem: Maybe<{ __typename?: 'Item' } & Pick<Item, 'id' | 'comment'>>
+    updateOneItem?: Maybe<
+        { __typename?: 'Item' } & Pick<Item, 'id' | 'comment'>
+    >
 }
 
-export type UndeleteItemMutationVariables = {
+export type UndeleteItemMutationVariables = Exact<{
     id: Scalars['String']
-}
+}>
 
 export type UndeleteItemMutation = { __typename?: 'Mutation' } & {
-    updateOneItem: Maybe<
+    updateOneItem?: Maybe<
         { __typename?: 'Item' } & Pick<Item, 'id' | 'isDeleted'>
     >
 }
 
-export type ChangePositionMutationVariables = {
+export type ChangePositionMutationVariables = Exact<{
     oldIndex: Scalars['Int']
     newIndex: Scalars['Int']
     collectionId: Scalars['ID']
-}
+}>
 
 export type ChangePositionMutation = { __typename?: 'Mutation' } & {
     changeItemPosition: Array<
@@ -1496,9 +1527,9 @@ export type ChangePositionMutation = { __typename?: 'Mutation' } & {
     >
 }
 
-export type GetItemsQueryVariables = {
+export type GetItemsQueryVariables = Exact<{
     collectionId?: Maybe<Scalars['String']>
-}
+}>
 
 export type GetItemsQuery = { __typename?: 'Query' } & {
     items: Array<
@@ -1506,9 +1537,9 @@ export type GetItemsQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type GetCollectionModalQueryVariables = {
+export type GetCollectionModalQueryVariables = Exact<{
     authUserId: Scalars['String']
-}
+}>
 
 export type GetCollectionModalQuery = { __typename?: 'Query' } & {
     collections: Array<
@@ -1518,26 +1549,26 @@ export type GetCollectionModalQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type GetStatusMessageQueryVariables = {}
+export type GetStatusMessageQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetStatusMessageQuery = { __typename?: 'Query' } & Pick<
     Query,
     'statusMessage'
 >
 
-export type GetNavigationStateQueryVariables = {}
+export type GetNavigationStateQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetNavigationStateQuery = { __typename?: 'Query' } & {
     modal: { __typename?: 'Modal' } & Pick<Modal, 'isNavigationOpen'>
 }
 
-export type GetSectionsQueryVariables = {
+export type GetSectionsQueryVariables = Exact<{
     authUserId: Scalars['String']
-}
+}>
 
 export type GetSectionsQuery = { __typename?: 'Query' } & {
-    user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'slug'>>
-    inbox: Maybe<{ __typename?: 'Inbox' } & Pick<Inbox, 'id' | 'count'>>
+    user?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'slug'>>
+    inbox?: Maybe<{ __typename?: 'Inbox' } & Pick<Inbox, 'id' | 'count'>>
     sections: Array<
         { __typename?: 'Section' } & Pick<
             Section,
@@ -1553,39 +1584,41 @@ export type GetSectionsQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type CreateSectionMutationVariables = {}
+export type CreateSectionMutationVariables = Exact<{ [key: string]: never }>
 
 export type CreateSectionMutation = { __typename?: 'Mutation' } & {
-    createEmptySection: { __typename?: 'Section' } & Pick<
-        Section,
-        'id' | 'slug' | 'createdAt' | 'index' | 'isExpanded'
-    > & { title: Section['name'] } & {
-            collections: Array<
-                { __typename?: 'Collection' } & Pick<
-                    Collection,
-                    'id' | 'slug' | 'isDeleted'
-                > & { title: Collection['name'] }
-            >
-        }
+    createEmptySection?: Maybe<
+        { __typename?: 'Section' } & Pick<
+            Section,
+            'id' | 'slug' | 'createdAt' | 'index' | 'isExpanded'
+        > & { title: Section['name'] } & {
+                collections: Array<
+                    { __typename?: 'Collection' } & Pick<
+                        Collection,
+                        'id' | 'slug' | 'isDeleted'
+                    > & { title: Collection['name'] }
+                >
+            }
+    >
 }
 
-export type UpdateSectionExpandedMutationVariables = {
+export type UpdateSectionExpandedMutationVariables = Exact<{
     isExpanded: Scalars['Boolean']
     sectionId: Scalars['String']
-}
+}>
 
 export type UpdateSectionExpandedMutation = { __typename?: 'Mutation' } & {
-    updateOneSection: Maybe<
+    updateOneSection?: Maybe<
         { __typename?: 'Section' } & Pick<Section, 'id' | 'isExpanded'>
     >
 }
 
-export type GetCollectionProfileQueryVariables = {
+export type GetCollectionProfileQueryVariables = Exact<{
     collectionId: Scalars['String']
-}
+}>
 
 export type GetCollectionProfileQuery = { __typename?: 'Query' } & {
-    collection: Maybe<
+    collection?: Maybe<
         { __typename?: 'Collection' } & Pick<Collection, 'createdAt'> & {
                 owner: { __typename?: 'User' } & Pick<
                     User,
@@ -1603,12 +1636,12 @@ export type GetCollectionProfileQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type GetProfileQueryVariables = {
+export type GetProfileQueryVariables = Exact<{
     slug?: Maybe<Scalars['String']>
-}
+}>
 
 export type GetProfileQuery = { __typename?: 'Query' } & {
-    user: Maybe<{ __typename?: 'User' } & UserBasicFragment & SocialFragment>
+    user?: Maybe<{ __typename?: 'User' } & UserBasicFragment & SocialFragment>
     sections: Array<
         { __typename?: 'Section' } & Pick<
             Section,
@@ -1617,7 +1650,7 @@ export type GetProfileQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type GetBreadcrumbsQueryVariables = {}
+export type GetBreadcrumbsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetBreadcrumbsQuery = { __typename?: 'Query' } & {
     breadcrumbs: Array<
@@ -1628,12 +1661,12 @@ export type GetBreadcrumbsQuery = { __typename?: 'Query' } & {
     >
 }
 
-export type GetUserByAuthIdQueryVariables = {
+export type GetUserByAuthIdQueryVariables = Exact<{
     authId: Scalars['String']
-}
+}>
 
 export type GetUserByAuthIdQuery = { __typename?: 'Query' } & {
-    user: Maybe<{ __typename?: 'User' } & UserBasicFragment>
+    user?: Maybe<{ __typename?: 'User' } & UserBasicFragment>
 }
 
 export type SectionDetailsFragment = { __typename?: 'Section' } & {

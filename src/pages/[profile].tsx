@@ -28,6 +28,7 @@ ProfilePage.getInitialProps = async (ctx: Context) => {
     const cookie = ctx.req?.headers?.cookie
     const isServer = typeof window === 'undefined'
     const profileSlug: string = ctx.query.profile.toLowerCase()
+    console.log('We are logged in and now atttempting to show profile page')
     return {
         profileSlug,
         loggedInUser: getUserAuth(isServer, cookie),

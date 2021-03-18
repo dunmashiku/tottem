@@ -3,10 +3,11 @@ import jwtDecode from 'jwt-decode'
 import Cookie from 'js-cookie'
 
 const AUTH_CONFIG = {
-    domain: process.env.AUTH0_DOMAIN,
-    clientId: process.env.AUTH0_CLIENTID,
-    audience: process.env.AUTH0_AUDIENCE,
-    callbackUrl: process.env.AUTH0_CALLBACK,
+    domain: process.env.AUTH0_DOMAIN || 'dunm-auth.us.auth0.com',
+    clientId: process.env.AUTH0_CLIENTID || 'iaHm3EQu3HCFpOkC3PRpYh2A0yGxXlyQ',
+    audience: process.env.AUTH0_AUDIENCE || 'http://localhost:4000/graphql',
+    callbackUrl:
+        process.env.AUTH0_CALLBACK || 'http://localhost:3000/auth/callback',
 }
 
 export default class Auth {

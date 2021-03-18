@@ -70,11 +70,14 @@ const getUserAuth = (isServer: boolean, cookie?: string) => {
 const getAuthUser: (
     parsed: Auth0UserDetails
 ) => AuthenticatedUser | undefined = parsed => {
+    console.log('What is in parsed??, ', parsed)
     const authenticatedUser = {
         picture: parsed.picture,
         email: parsed.email,
         name: parsed.nickname || parsed.email,
-        roles: parsed['https://tottem.app/user_authorization'].roles,
+        roles: parsed['https://tottem.app/user_authorization']?.roles ?? [
+            'admin',
+        ],
         id: parsed.sub,
     }
     return authenticatedUser

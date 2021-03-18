@@ -27,7 +27,9 @@ export const useCreateEmptyCollection = (
     return useCreateEmptyCollectionMutation({
         variables: { sectionId },
         onCompleted: data => {
-            router.push('/me/c/[collectionId]', `/me/c/${data.collection.id}`)
+            console.log('Creating empty collection....look in data: ', data)
+            router.push('/me/c/[collectionId]', `/me/c/${data.collection?.id}`)
+            console.log("It didn't get here")
         },
         refetchQueries: [
             { query: GetSectionsDocument, variables: { authUserId } },

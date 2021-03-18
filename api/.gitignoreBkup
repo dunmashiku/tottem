@@ -1,0 +1,13 @@
+dist
+node_modules
+*/migrations
+.DS_Store
+yarn-error.log
+failed-*.md
+.idea
+.yalc
+yalc.lock
+.vscode
+.postgres-data
+.mysql-data
+tests/tmp
