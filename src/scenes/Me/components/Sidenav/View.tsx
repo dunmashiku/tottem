@@ -41,7 +41,7 @@ const Sidenav: React.FC<SidenavProps> = ({
         onCompleted: data => {
             Router.push(
                 '/me/s/[sectionId]',
-                `/me/s/${data.createEmptySection.id}`
+                `/me/s/${data.createEmptySection?.id}`
             )
         },
         update: updateSections,

@@ -168,8 +168,8 @@ const errorLink = onError(handleGraphQLErrors)
 
 function createApolloClient(initialState = {}, cookie = '') {
     const httpLink = createHttpLink({
-        uri: process.env.GRAPHQL_URL,
-        credentials: 'same-origin',
+        uri: process.env.GRAPHQL_URL || 'http://localhost:4000/graphql',
+        credentials: 'include',
         fetch,
     })
 

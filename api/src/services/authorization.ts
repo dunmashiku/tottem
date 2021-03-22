@@ -56,16 +56,20 @@ const permissions = shield(
         or(isAdmin, canModifyCollection),
       ),
       createOneUser: isAuthenticated,
+      createNewUser: isAuthenticated,
       createItemFromUrl: and(isAuthenticated, or(isAdmin, canModifyCollection)),
       createItemFromSearch: and(
         isAuthenticated,
         or(isAdmin, canModifyCollection),
       ),
+      createEmptySection: and(isAuthenticated, or(isAdmin, isSectionOwner)),
       createEmptyCollection: and(isAuthenticated, or(isAdmin, isSectionOwner)),
       updateOneCollection: and(isAuthenticated, or(isAdmin, isCollectionOwner)),
     },
   },
-  { fallbackError: new ForbiddenError('Not Authorised!') },
+  {
+    fallbackError: new ForbiddenError('Not Authorised Dun!'),
+  },
 )
 
 type Model = 'collection' | 'section'
@@ -77,7 +81,7 @@ const getOwnerAuth0id: (
 ) => Promise<string | undefined | null> = async (ctx, type, id) => {
   if (type === 'collection') {
     // Only member check object to update owner
-    const collection = await ctx.prisma.collection.findUnique({
+    const collection = await ctx.prisma.collection.findFirst({
       where: {
         id,
       },
@@ -87,7 +91,7 @@ const getOwnerAuth0id: (
     })
     return collection?.owner.authUserId
   } else if (type === 'section') {
-    const section = await ctx.prisma.section.findUnique({
+    const section = await ctx.prisma.section.findFirst({
       where: {
         id,
       },

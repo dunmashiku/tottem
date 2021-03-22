@@ -75,9 +75,7 @@ const getAuthUser: (
         picture: parsed.picture,
         email: parsed.email,
         name: parsed.nickname || parsed.email,
-        roles: parsed['https://tottem.app/user_authorization']?.roles ?? [
-            'admin',
-        ],
+        roles: parsed['https://tottem.app/user_authorization']?.roles,
         id: parsed.sub,
     }
     return authenticatedUser
